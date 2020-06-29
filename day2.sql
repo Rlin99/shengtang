@@ -59,6 +59,8 @@ VALUES ('a1', 101, 'apple', 5.2),
    select * from fruits where f_name like '____y';
    
    
+   select * from dept, employee where d_no = dept_no;
+   
 CREATE TABLE dept
 (
     d_no       INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -211,7 +213,7 @@ VALUES (30001, 1, 'a1', 10, 5.2),
        (30005, 4, 'm1', 5, 14.99);
 
 -- 查询订单价格大于100的订单号和总订单价格
-   select o_num, o_item, (item_price + quantity) as 总价 from orderitems where (item_price * quantity) > 100;
+   select o_num,count(*),sum(item_price * quantity) from orderitems group by o_num having sum(item_price * quantity) > 100;
 -- 将以上内容使用ORDER BY关键字按总订单价格排序显示结果
    select o_num, o_item, (item_price * quantity) as 总价 
    from orderitems 

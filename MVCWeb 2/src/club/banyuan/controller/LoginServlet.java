@@ -11,10 +11,7 @@ import com.sun.tools.corba.se.idl.constExpr.Or;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginName = request.getParameter("loginName");
         String password = request.getParameter("password");
+        String checkbox = request.getParameter("checkbox");
 //        格式验证
 
 //        调用service处理登录请求
@@ -34,7 +32,13 @@ public class LoginServlet extends HttpServlet {
             if(user!=null){
                 HttpSession session = request.getSession();
                 session.setAttribute("user",user);
-                //获取address
+                if(checkbox !=null ){
+                    Cookie cookie = new Cookie("loginName",loginName);
+                    cookie.setMaxAge(24*3600);
+                    response.addCookie(cookie);
+                }
+
+                //获取地址address
                 List<Address> addressList = new ArrayList<Address>();
                 try {
                     addressList = userService.getAddress((user.getId()));
@@ -54,9 +58,10 @@ public class LoginServlet extends HttpServlet {
                 List<Order> orderList = new ArrayList<>();
                 orderList = orderService.selectOrderByUserId(user.getId());
                 session.setAttribute("orderList", orderList);
+
+
+
                 request.getRequestDispatcher("index.jsp").forward(request,response);
-
-
                 return ;
             }
         } catch (SQLException throwables) {
@@ -64,7 +69,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.getRequestDispatcher("login.html").forward(request,response);
+        request.getRequestDispatcher("login.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

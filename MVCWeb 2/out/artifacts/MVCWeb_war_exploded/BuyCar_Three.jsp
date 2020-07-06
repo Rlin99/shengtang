@@ -1,10 +1,8 @@
-<%@ page import="club.banyuan.entity.Product" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="club.banyuan.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: edz
-  Date: 2020/7/3
-  Time: 11:17 上午
+  Date: 2020/7/6
+  Time: 7:22 下午
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -115,19 +113,20 @@
         <!--End 所在收货地区 End-->
         <span class="fr">
         	<span class="fl">
-                      <%
-                          Object object = session.getAttribute("user");
-                          if(object != null){
-                              User user = (User)object;
-                              out.print("<a href=\"#\">"+"欢迎， "+user.getLoginName()+"</a>&nbsp;");
-                              //out.print("欢迎，" + user.getLoginName());
-                          }
-                          else{
-                              out.print("你好，请<a href='login.jsp'>登录</a>");
-                              out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
-                          }
-                      %>&nbsp;
-                  &nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+                    <%
+                        Object object = session.getAttribute("user");
+                        if(object != null){
+                            User user = (User)object;
+                            out.print("<a href=\"#\">"+"欢迎， "+user.getLoginName()+"</a>&nbsp;");
+                            //out.print("欢迎，" + user.getLoginName());
+                        }
+                        else{
+                            out.print("你好，请<a href='login.jsp'>登录</a>");
+                            out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
+                        }
+                        session.removeAttribute("cart");
+                    %>&nbsp;
+                |&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -477,91 +476,87 @@
 <!--End Menu End-->
 <div class="i_bg">
     <div class="content mar_20">
-        <img src="images/img1.jpg" />
+        <img src="images/img3.jpg" />
     </div>
 
-    <!--Begin 第一步：查看购物车 Begin -->
+    <!--Begin 第三步：提交订单 Begin -->
     <div class="content mar_20">
-        <table border="0" class="car_tab" style="width:1200px; margin-bottom:50px;" cellspacing="0" cellpadding="0">
-            <tr>
-                <td class="car_th" width="490">商品名称</td>
-                <td class="car_th" width="140">属性</td>
-                <td class="car_th" width="150">购买数量</td>
-                <td class="car_th" width="130">小计</td>
-                <td class="car_th" width="140">返还积分</td>
-                <td class="car_th" width="150">操作</td>
-            </tr>
-            <%
-                Double sumcost = 0.0;
-                int i = 0;
-                Map<Product,Integer> cart = (Map<Product,Integer>)session.getAttribute("cart");
-                for (Product product : cart.keySet()) {
-                    sumcost += product.getPrice()*cart.get(product);
-                    i++;
-            %>
-            <tr>
-                <td>
-                    <div class="c_s_img"><img src="images/<%=product.getFileName()%>" width="73" height="73" /></div>
-                    <%=product.getName()%>
-                </td>
-                <td align="center">颜色：灰色</td>
-                <td align="center">
-                    <div class="c_num">
-                        <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                        <input type="text" value="<%=cart.get(product)%>" name="quantity" class="car_ipt" />
-                        <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                    </div>
-                </td>
-                <td align="center" style="color:#ff4e00;">￥<%=(Double) product.getPrice()*cart.get(product)%></td>
-                <td align="center">26R</td>
-                <td align="center"><a onclick="ShowDiv('MyDiv','fade')">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-            </tr>
-            <%
-            }
-                session.setAttribute("Pnum", i);
-            %>
-            <tr height="70">
-                <td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
-                    <label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
-                    <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥<%
-                        session.setAttribute("sumcost", sumcost);out.print(sumcost);
-                    %></b></span>
-                </td>
-            </tr>
-            <tr valign="top" height="150">
-                <td colspan="6" align="right">
-                    <a href="index.jsp"><img src="images/buy1.gif" /></a>&nbsp; &nbsp;
-                    <a href="confirmOrder.do"><img src="images/buy2.gif" /></a>
-                </td>
-            </tr>
-        </table>
 
-    </div>
-    <!--End 第一步：查看购物车 End-->
-
-
-    <!--Begin 弹出层-删除商品 Begin-->
-    <div id="fade" class="black_overlay"></div>
-    <div id="MyDiv" class="white_content">
-        <div class="white_d">
-            <div class="notice_t">
-                <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv('MyDiv','fade')"><img src="images/close.gif" /></span>
-            </div>
-            <div class="notice_c">
-
-                <table border="0" align="center" style="font-size:16px;" cellspacing="0" cellpadding="0">
-                    <tr valign="top">
-                        <td>您确定要把该商品移除购物车吗？</td>
-                    </tr>
-                    <tr height="50" valign="bottom">
-                        <td><a href="#" class="b_sure">确定</a><a href="#" class="b_buy">取消</a></td>
-                    </tr>
-                </table>
-
-            </div>
+        <!--Begin 银行卡支付 Begin -->
+        <div class="warning">
+            <table border="0" style="width:1000px; text-align:center;" cellspacing="0" cellpadding="0">
+                <tr height="35">
+                    <td style="font-size:18px;">
+                        感谢您在本店购物！您的订单已提交成功，请记住您的订单号: <font color="#ff4e00">${sessionScope.serialNumber}</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:14px; font-family:'宋体'; padding:10px 0 20px 0; border-bottom:1px solid #b6b6b6;">
+                        您选定的配送方式为: <font color="#ff4e00">申通快递</font>； &nbsp; &nbsp;您选定的支付方式为: <font color="#ff4e00">支付宝</font>； &nbsp; &nbsp;您的应付款金额为: <font color="#ff4e00">￥${sessionScope.sumcost}}</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:20px 0 30px 0; font-family:'宋体';">
+                        银行名称 收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。 <br />
+                        注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#">首页</a> &nbsp; &nbsp; <a href="#">用户中心</a>
+                    </td>
+                </tr>
+            </table>
         </div>
+        <!--Begin 银行卡支付 Begin -->
+
+        <!--Begin 支付宝支付 Begin -->
+        <div class="warning">
+            <table border="0" style="width:1000px; text-align:center;" cellspacing="0" cellpadding="0">
+                <tr height="35">
+                    <td style="font-size:18px;">
+                        感谢您在本店购物！您的订单已提交成功，请记住您的订单号: <font color="#ff4e00">2015092598275</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:14px; font-family:'宋体'; padding:10px 0 20px 0; border-bottom:1px solid #b6b6b6;">
+                        您选定的配送方式为: <font color="#ff4e00">申通快递</font>； &nbsp; &nbsp;您选定的支付方式为: <font color="#ff4e00">银行卡</font>； &nbsp; &nbsp;您的应付款金额为: <font color="#ff4e00">￥888.00</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:20px 0 30px 0; font-family:'宋体';">
+                        支付宝网站(www.alipay.com) 是国内先进的网上支付平台。<br />
+                        支付宝收款接口：在线即可开通，零预付，免年费，单笔阶梯费率，无流量限制。<br />
+                        <a href="#" style="color:#ff4e00;">立即在线申请</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="btn_u" style="margin:0 auto; padding:0 20px; width:120px;"><a href="#">立即使用支付宝支付</a></div>
+                        <a href="#">首页</a> &nbsp; &nbsp; <a href="#">用户中心</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--Begin 支付宝支付 Begin -->
+
+        <!--Begin 余额不足 Begin -->
+        <div class="warning">
+            <table border="0" style="width:1000px; text-align:center;" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <p style="font-size:22px;">提示 !</p>
+                        <b style="color:#ff4e00; font-size:16px; font-family:'宋体';">您的余额不足以支付整个订单，请选择其他支付方式</b>
+                        <div class="backs"><a href="#">返回上一页</a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--Begin 余额不足 Begin -->
+
+
     </div>
-    <!--End 弹出层-删除商品 End-->
+    <!--End 第三步：提交订单 End-->
 
 
     <!--Begin Footer Begin -->

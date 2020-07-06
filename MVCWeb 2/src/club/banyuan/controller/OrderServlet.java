@@ -21,8 +21,8 @@ import java.util.*;
 @WebServlet(name = "OrderServlet", urlPatterns = "/order.do")
 public class OrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Double sumcost = Double.valueOf(request.getParameter("sumcost"));
         HttpSession session = request.getSession();
+        Double sumcost = (Double) session.getAttribute("sumcost");
         User user = (User)session.getAttribute("user");
 
 
@@ -49,16 +49,21 @@ public class OrderServlet extends HttpServlet {
         OrderService orderService = new OrderServiceImpl();
         try {
 
-            int orderId = orderService.addOrder(order);
+//            int orderId = orderService.addOrder(order);
+            List<OrderDetail> orderDetailList = new ArrayList<>();
             Map<Product,Integer> cart = (Map<Product, Integer>) session.getAttribute("cart");
             for (Product product : cart.keySet()) {
                 OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrderId(orderId);
+//                orderDetail.setOrderId(orderId);
                 orderDetail.setProductId(product.getId());
                 orderDetail.setQuantity(cart.get(product));
-                orderDetail.setCost((Double) (cart.get(product)*product.getPrice()));
-                orderService.addOrderDetail(orderDetail);
+                orderDetail.setCost((Double) (cart.get(product) * product.getPrice()));
+//                orderService.addOrderDetail(orderDetail);
+                orderDetailList.add(orderDetail);
             }
+            orderService.createOrder(order, orderDetailList);
+
+            session.setAttribute("serialNumber", order.getSerialNumber());
 
             //获取用户订单信息
             List<Order> orderList = new ArrayList<>();
@@ -66,7 +71,7 @@ public class OrderServlet extends HttpServlet {
             session.setAttribute("orderList", orderList);
 
 
-            request.getRequestDispatcher("Member_Order.jsp").forward(request, response);
+            request.getRequestDispatcher("BuyCar_Three.jsp").forward(request, response);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (Exception e) {

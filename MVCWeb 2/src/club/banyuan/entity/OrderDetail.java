@@ -11,6 +11,17 @@ public class OrderDetail {
         super();
     }
 
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", cost=" + cost +
+                '}';
+    }
+
     public OrderDetail(Integer id, Integer orderId, Integer productId, Integer quantity, Double cost) {
         this.id = id;
         this.orderId = orderId;

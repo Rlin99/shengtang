@@ -42,7 +42,7 @@ public class RegistServlet extends HttpServlet {
             throwables.printStackTrace();
         }
         if(flag){
-            response.sendRedirect("Login.html");
+            response.sendRedirect("login.jsp");
         }else{
             response.sendRedirect("Regist.html");
         }

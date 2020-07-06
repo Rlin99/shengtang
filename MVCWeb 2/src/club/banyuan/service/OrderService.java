@@ -10,4 +10,5 @@ public interface OrderService {
     public int addOrder(Order order) throws SQLException;
     public List<Order> selectOrderByUserId(Integer userId) throws Exception;
     public int addOrderDetail(OrderDetail orderDetail) throws SQLException;
+    public void createOrder(Order order, List<OrderDetail> orderDetailList) throws Exception;
 }

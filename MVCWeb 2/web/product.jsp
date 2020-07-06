@@ -131,7 +131,7 @@
                          //out.print("欢迎，" + user.getLoginName());
                      }
                      else{
-                         out.print("你好，请<a href='login.html'>登录</a>");
+                         out.print("你好，请<a href='login.jsp'>登录</a>");
                          out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
                      }
                  %>&nbsp;

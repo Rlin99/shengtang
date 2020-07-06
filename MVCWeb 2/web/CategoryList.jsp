@@ -122,7 +122,7 @@
                          //out.print("欢迎，" + user.getLoginName());
                      }
                      else{
-                         out.print("你好，请<a href='login.html'>登录</a>");
+                         out.print("你好，请<a href='login.jsp'>登录</a>");
                          out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
                      }
                  %>&nbsp;
@@ -629,7 +629,7 @@
                                         "                        <div class=\"name\"><a href=\"#\">"+product.getName()+"</a></div>\n" +
                                         "                        <div class=\"carbg\">\n" +
                                         "                            <a href=\"#\" class=\"ss\">收藏</a>\n" +
-                                        "                            <a href=\"#\" class=\"j_car\">加入购物车</a>\n" +
+                                        "                            <a href=\"detail.do?id="+product.getId()+"\" class=\"j_car\">加入购物车</a>\n" +
                                         "                        </div>\n" +
                                         "                    </li>");
                             }

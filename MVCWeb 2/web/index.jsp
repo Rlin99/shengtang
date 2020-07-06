@@ -1,4 +1,6 @@
-<%@ page import="club.banyuan.entity.User" %><%--
+<%@ page import="club.banyuan.entity.User" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="club.banyuan.entity.Product" %><%--
   Created by IntelliJ IDEA.
   User: edz
   Date: 2020/7/2
@@ -128,11 +130,25 @@
         if(object != null){
           User user = (User)object;
           out.print("<a href=Member_User.jsp>"+"欢迎， "+user.getLoginName()+"</a>&nbsp;");
-          //out.print("欢迎，" + user.getLoginName());
         }
         else{
-          out.print("你好，请<a href='login.html'>登录</a>");
-          out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
+          String loginName = null;
+          Cookie[] cookies = request.getCookies();
+          if(cookies != null){
+            for (Cookie cookie : cookies) {
+              if(cookie.getName().equals("loginName")) {
+                loginName = cookie.getValue();
+                break;
+              }
+            }
+          }
+          if(loginName != null){
+            out.print("<a href=Member_User.jsp>"+"欢迎， "+loginName+"</a>&nbsp;");
+          }else {
+            out.print("你好，请<a href='login.jsp'>登录</a>");
+            out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
+          }
+
         }
     %>
         	&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
@@ -191,31 +207,57 @@
     <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
   </div>
   <div class="i_car">
-    <div class="car_t">购物车 [ <span>3</span> ]</div>
+    <div class="car_t">购物车 [ <span><%
+      if(session.getAttribute("Pnum") == null){
+        out.print("0");
+      }else
+        out.print(session.getAttribute("Pnum"));
+    %></span> ]</div>
     <div class="car_bg">
       <!--Begin 购物车未登录 Begin-->
-      <div class="un_login">还未登录！<a href="Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+      <div class="un_login">
+        <%
+          Object object1 = session.getAttribute("user");
+          if(object1 != null){
+            User user = (User)object1;
+            out.print("<a href=\"#\">"+"欢迎， "+user.getLoginName()+"</a>&nbsp;");
+            //out.print("欢迎，" + user.getLoginName());
+        %>&nbsp;
+      </div>
       <!--End 购物车未登录 End-->
       <!--Begin 购物车已登录 Begin-->
       <ul class="cars">
+        <%
+          Object objectcart = session.getAttribute("cart");
+          if( objectcart != null){
+            Double sumcost = 0.0;
+            Map<Product, Integer> cart = (Map<Product, Integer>)objectcart;
+            for(Product product : cart.keySet()){
+              sumcost += product.getPrice()*cart.get(product);
+        %>
         <li>
-          <div class="img"><a href="#"><img src="images/car1.jpg" width="58" height="58" /></a></div>
-          <div class="name"><a href="#">法颂浪漫梦境50ML 香水女士持久清新淡香 送2ML小样3只</a></div>
-          <div class="price"><font color="#ff4e00">￥399</font> X1</div>
+          <div class="img"><a href="#"><img src="images/<%=product.getFileName()%>" width="58" height="58" /></a></div>
+          <div class="name"><a href="#"><%=product.getName()%></a></div>
+          <div class="price"><font color="#ff4e00">￥<%=product.getPrice()%></font> X<%=cart.get(product)%></div>
         </li>
-        <li>
-          <div class="img"><a href="#"><img src="images/car2.jpg" width="58" height="58" /></a></div>
-          <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-          <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-        </li>
-        <li>
-          <div class="img"><a href="#"><img src="images/car2.jpg" width="58" height="58" /></a></div>
-          <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-          <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-        </li>
+        <%
+            }
+            %>
+        <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span><%=sumcost%></span></div>
+        <div class="price_a"><a href="buycar.jsp">去购物车结算</a></div>
+            <%
+          }else {
+            out.print("<div class=\"un_login\">宁的购物车空空如也～～～！</div>");
+          }
+        %>
       </ul>
-      <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
-      <div class="price_a"><a href="#">去购物车结算</a></div>
+      <%
+        }
+        else{
+          out.print("还未登录！<a href=\"login.jsp\" style=\"color:#ff4e00;\">马上登录</a> 查看购物车！");
+        }
+      %>
+
       <!--End 购物车已登录 End-->
     </div>
   </div>

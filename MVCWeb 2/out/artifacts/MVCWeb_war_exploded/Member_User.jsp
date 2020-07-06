@@ -117,7 +117,7 @@
                               //out.print("欢迎，" + user.getLoginName());
                           }
                           else{
-                              out.print("你好，请<a href='login.html'>登录</a>");
+                              out.print("你好，请<a href='login.jsp'>登录</a>");
                               out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
                           }
                       %>
@@ -181,7 +181,7 @@
             <div class="car_t">购物车 [ <span>3</span> ]</div>
             <div class="car_bg">
                 <!--Begin 购物车未登录 Begin-->
-                <div class="un_login">还未登录！<a href="Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+                <div class="un_login">还未登录！<a href="login.jsp" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
                 <!--End 购物车未登录 End-->
                 <!--Begin 购物车已登录 Begin-->
                 <ul class="cars">

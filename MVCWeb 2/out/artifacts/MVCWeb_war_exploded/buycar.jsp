@@ -123,7 +123,7 @@
                               //out.print("欢迎，" + user.getLoginName());
                           }
                           else{
-                              out.print("你好，请<a href='login.html'>登录</a>");
+                              out.print("你好，请<a href='login.jsp'>登录</a>");
                               out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
                           }
                       %>&nbsp;
@@ -493,9 +493,11 @@
             </tr>
             <%
                 Double sumcost = 0.0;
+                int i = 0;
                 Map<Product,Integer> cart = (Map<Product,Integer>)session.getAttribute("cart");
                 for (Product product : cart.keySet()) {
                     sumcost += product.getPrice()*cart.get(product);
+                    i++;
             %>
             <tr>
                 <td>
@@ -516,17 +518,20 @@
             </tr>
             <%
             }
+                session.setAttribute("Pnum", i);
             %>
             <tr height="70">
                 <td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
                     <label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
-                    <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥<%=sumcost%></b></span>
+                    <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥<%
+                        session.setAttribute("sumcost", sumcost);out.print(sumcost);
+                    %></b></span>
                 </td>
             </tr>
             <tr valign="top" height="150">
                 <td colspan="6" align="right">
                     <a href="index.jsp"><img src="images/buy1.gif" /></a>&nbsp; &nbsp;
-                    <a href="order.do?sumcost=<%=sumcost%>"><img src="images/buy2.gif" /></a>
+                    <a href="confirmOrder.do"><img src="images/buy2.gif" /></a>
                 </td>
             </tr>
         </table>

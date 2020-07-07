@@ -28,9 +28,27 @@
     <script type="text/javascript" src="js/tban.js"></script>
     
 	<script type="text/javascript" src="js/lrscroll_1.js"></script>
-    
+
+
     
 <title>购物街</title>
+    <script>
+
+        $(function() { $("#loginName").blur(function() {
+            var loginName = this.value; $("#tdLoginName div").remove(); if(loginName != ""){
+                $.get("validate.do", "loginName="+loginName, callBack);
+//响应成功时的回调函数
+              function callBack(data) {
+                if(data == "false"){
+                    $("#tdLoginName").append("<div><span style='color:red'>用户名
+                    已经被注册</span></div>")
+                }
+            }//end of callBack()
+        }else{
+            $("#tdLoginName").append("");
+            }
+        }); })
+    </script>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -63,8 +81,8 @@
                 </td>
               </tr>
               <tr height="50">
-                <td align="right"><font color="#ff4e00">*</font>&nbsp;登录名 &nbsp;</td>
-                <td><input type="text" name="loginName" value="" class="l_user" /></td>
+                <td  align="right"><font color="#ff4e00">*</font>&nbsp;登录名 &nbsp;</td>
+                <td id="tdLoginName"><input type="text" id="loginName" name="loginName" value="" class="l_user" /></td>
               </tr>
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;密码 &nbsp;</td>

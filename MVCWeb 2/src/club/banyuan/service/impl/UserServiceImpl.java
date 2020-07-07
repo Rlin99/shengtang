@@ -37,4 +37,10 @@ public class UserServiceImpl implements UserService {
         return addressDao.add(address);
     }
 
+    @Override
+    public Boolean selectLoginName(String loginName) throws Exception {
+        UserDao userDao = new UserDaoImpl(JdbcUtils.getConnection());
+        return userDao.selectLoginName(loginName);
+    }
+
 }

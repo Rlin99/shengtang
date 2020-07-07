@@ -146,7 +146,7 @@
             out.print("<a href=Member_User.jsp>"+"欢迎， "+loginName+"</a>&nbsp;");
           }else {
             out.print("你好，请<a href='login.jsp'>登录</a>");
-            out.print("&nbsp; <a href=\"Regist.html\" style=\"color:#ff4e00;\">免费注册</a>");
+            out.print("&nbsp; <a href=\"regist.jsp\" style=\"color:#ff4e00;\">免费注册</a>");
           }
 
         }

@@ -5,6 +5,7 @@ import club.banyuan.entity.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
@@ -34,6 +35,20 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             exception.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public Boolean selectLoginName(String loginName) {
+        String sql = "select * from user where loginName = ?";
+        ResultSet rs = executeQuery(sql, new Object[]{loginName});
+        try {
+            if(rs.next()){
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
     }
 
     @Override

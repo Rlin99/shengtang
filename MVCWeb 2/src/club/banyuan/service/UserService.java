@@ -11,4 +11,5 @@ public interface UserService {
     public int regist(User user) throws SQLException;
     public List<Address> getAddress(Integer userId) throws Exception;
     public int addAddress(Address address) throws Exception;
+    public Boolean selectLoginName( String loginName) throws Exception;
 }

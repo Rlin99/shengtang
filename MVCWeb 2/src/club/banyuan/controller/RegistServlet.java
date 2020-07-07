@@ -44,7 +44,7 @@ public class RegistServlet extends HttpServlet {
         if(flag){
             response.sendRedirect("login.jsp");
         }else{
-            response.sendRedirect("Regist.html");
+            response.sendRedirect("Regist.jsp");
         }
     }
 

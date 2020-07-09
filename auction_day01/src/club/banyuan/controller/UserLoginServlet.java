@@ -32,13 +32,13 @@ public class UserLoginServlet extends HttpServlet {
         try {
             user = userServiceDao.login(userName, password);
             if(user != null){
-                String proName ="";
-                List<Product> productList = new ArrayList<Product>();
-                productList = productServiceDao.getProductByName(proName);
-                for (Product product : productList) {
+                Integer isSelled = 0;//1售出 0 为售出
+                List<Product> productListNotSelled = new ArrayList<Product>();
+                productListNotSelled = productServiceDao.getProductBySell(isSelled);
+                for (Product product : productListNotSelled) {
                     System.out.println(product.getName());
                 }
-                session.setAttribute("productList", productList);
+                session.setAttribute("productListNotSelled", productListNotSelled);
                 session.setAttribute("user", user);
                 session.setAttribute("userId", user.getId());
                 session.setAttribute("userName", user.getUserName());

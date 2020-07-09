@@ -25,20 +25,24 @@
   <div class="sale">
     <h1 class="lf">在线拍卖系统</h1>
     <div class="logout right"><a href="#" title="注销">注销</a></div>
+    <div class="logout right"><a href="auctionResult.do">看竞拍结果</a></div>
   </div>
-  <div class="forms">
-    <label for="name">名称</label>
-    <input name="" type="text" class="nwinput" id="name"/>
-    <label for="names">描述</label>
-    <input name="" type="text" id="names" class="nwinput"/>
-    <label for="time">开始时间</label>
-    <input name="" type="text" id="time" class="nwinput"/>
-    <label for="end-time">结束时间</label>
-    <input name="" type="text" id="end-time" class="nwinput" />
-    <label for="price">起拍价</label>
-    <input name="" type="text" id="price" class="nwinput" />
-    <input name="" type="button"  value="查询" class="spbg buttombg f14  sale-buttom"/>
-  </div>
+   <form action="search.do">
+     <div class="forms">
+       <label for="name">名称</label>
+       <input name="name" type="text" class="nwinput" id="name"/>
+       <label for="names">描述</label>
+       <input name="describtion" type="text" id="names" class="nwinput"/>
+       <label for="time">开始时间</label>
+       <input name="startTime" type="text" id="time" class="nwinput"/>
+       <label for="end-time">结束时间</label>
+       <input name="finishTime" type="text" id="end-time" class="nwinput" />
+       <label for="price">起拍价</label>
+       <input name="startPrice" type="text" id="price" class="nwinput" />
+       <input name="" type="submit"  value="查询" class="spbg buttombg f14  sale-buttom"/>
+     </div>
+   </form>
+
   <div class="items">
     <ul class="rows even strong">
       <li>名称</li>
@@ -49,7 +53,7 @@
       <li class="borderno">操作</li>
     </ul>
     <%
-      List<Product> productList = (ArrayList<Product>)session.getAttribute("productList");
+      List<Product> productList = (ArrayList<Product>)session.getAttribute("productListNotSelled");
       User user = (User) session.getAttribute("user");
       if(user != null){
       for (Product product : productList) {
@@ -66,11 +70,12 @@
     <%
       }
       }else{
-        out.print("你好，请<a href='login.jsp'>登录</a>");
-        out.print("&nbsp; <a href=\"regist.jsp\" style=\"color:#ff4e00;\">免费注册</a>");
+//        out.print("<a href=\"login.do\"><input type=\"button\" value=\"用户登录\"/></a>");
+//        out.print("<a href=\"adminLogin.do\"><input type=\"button\" value=\"管理员登陆\"/></a>");
+        out.println("<h1><a href=\"login.do\">用户登陆</a></h1>");
+        out.print("<h1><a href=\"adminLogin.do\">管理员登陆</a></h1>");
       }
     %>
-
     <div class="page">
       <a href="#" title="">首页</a>
       <a href="#" title="">上一页</a>

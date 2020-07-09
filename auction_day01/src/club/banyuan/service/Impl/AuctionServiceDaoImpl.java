@@ -18,6 +18,12 @@ public class AuctionServiceDaoImpl implements AuctionServiceDao {
     }
 
     @Override
+    public Auction getProductHighPrice(Integer productId) throws Exception {
+        AuctionDao auctionDao = new AuctionDaoImpl(JdbcUtils.getConnection());
+        return auctionDao.getProductHighPrice(productId);
+    }
+
+    @Override
     public int add(Auction auction) throws SQLException {
         AuctionDao auctionDao = new AuctionDaoImpl(JdbcUtils.getConnection());
         return auctionDao.add(auction);

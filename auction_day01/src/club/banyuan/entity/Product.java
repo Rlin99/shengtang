@@ -17,6 +17,21 @@ public class Product {
         super();
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", describtion='" + describtion + '\'' +
+                ", startTime=" + startTime +
+                ", finishTime=" + finishTime +
+                ", startPrice=" + startPrice +
+                ", basePrice=" + basePrice +
+                ", fileName='" + fileName + '\'' +
+                ", isSelled=" + isSelled +
+                '}';
+    }
+
     public Product(Integer id, String name, String describtion, Date startTime, Date finishTime, Double startPrice, Double basePrice, String fileName, Integer isSelled) {
         this.id = id;
         this.name = name;

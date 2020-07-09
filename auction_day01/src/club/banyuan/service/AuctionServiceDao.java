@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface AuctionServiceDao {
     public List<Auction> getByProductId(Integer productId) throws Exception;
+    public Auction getProductHighPrice(Integer productId) throws  Exception;
     public int add(Auction auction)throws SQLException;
 }

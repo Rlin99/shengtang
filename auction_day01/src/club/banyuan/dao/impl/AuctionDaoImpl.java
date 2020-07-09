@@ -27,6 +27,17 @@ public class AuctionDaoImpl extends BaseDaoImpl implements AuctionDao {
     }
 
     @Override
+    public Auction getProductHighPrice(Integer id) throws Exception {
+        String sql = "select * from auction where productId = ? order by price desc limit 1";
+        ResultSet rs = executeQuery(sql, new Object[]{id});
+        Auction auction = new Auction();
+        if(rs.next()){
+            auction = tableToClass(rs);
+        }
+        return auction;
+    }
+
+    @Override
     public int add(Auction auction) {
         String sql = "insert into auction values(null,?,?,?,?,?)";
         Object[] params = new Object[]{auction.getUserId(),auction.getUesrName(),auction.getProductId(),

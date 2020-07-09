@@ -1,4 +1,8 @@
-<%--
+<%@ page import="club.banyuan.entity.Product" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="club.banyuan.entity.User" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: edz
   Date: 2020/7/8
@@ -44,86 +48,29 @@
       <li>起拍价</li>
       <li class="borderno">操作</li>
     </ul>
+    <%
+      List<Product> productList = (ArrayList<Product>)session.getAttribute("productList");
+      User user = (User) session.getAttribute("user");
+      if(user != null){
+      for (Product product : productList) {
+
+    %>
     <ul class="rows">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
+      <li><a href="#" title=""><%=product.getName()%></a></li>
+      <li class="list-wd"><%=product.getDescribtion()%></li>
+      <li><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ").format(product.getStartTime())%></li>
+      <li><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ").format(product.getFinishTime())%></li>
+      <li><%=product.getStartPrice()%></li>
+      <li class="borderno red"><a href="auction.do?id=<%=product.getId()%>">竞拍</a></li>
     </ul>
-    <ul class="rows even">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows even">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows even">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows even">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
-    <ul class="rows even">
-      <li><a href="国书" title="">国书</a></li>
-      <li class="list-wd">明国藏书</li>
-      <li>2010-01-20 12:30:30</li>
-      <li>2010-09-08 12:30:30</li>
-      <li>2,000</li>
-      <li class="borderno red"><a href="#">竞拍</a></li>
-    </ul>
+    <%
+      }
+      }else{
+        out.print("你好，请<a href='login.jsp'>登录</a>");
+        out.print("&nbsp; <a href=\"regist.jsp\" style=\"color:#ff4e00;\">免费注册</a>");
+      }
+    %>
+
     <div class="page">
       <a href="#" title="">首页</a>
       <a href="#" title="">上一页</a>

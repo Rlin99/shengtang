@@ -6,6 +6,7 @@ import club.banyuan.entity.Product;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
@@ -30,8 +31,12 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
     public Product getProductById(Integer id) throws Exception {
         Product product = null;
-        String sql = "select * from ";
-        return null;
+        String sql = "select * from product where id = ?";
+        ResultSet rs = executeQuery(sql, new Object[]{id});
+        if(rs.next()){
+            product = tableToClass(rs);
+        }
+        return product;
     }
 
     @Override
@@ -40,8 +45,8 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         product.setId(rs.getInt(1));
         product.setName(rs.getString(2));
         product.setDescribtion(rs.getString(3));
-        product.setStartTime(rs.getTime(4));
-        product.setFinishTime(rs.getTime(5));
+        product.setStartTime(rs.getTimestamp(4));
+        product.setFinishTime(rs.getTimestamp(5));
         product.setStartPrice(rs.getDouble(6));
         product.setBasePrice(rs.getDouble(7));
         product.setFileName(rs.getString(8));

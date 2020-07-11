@@ -2,7 +2,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="club.banyuan.entity.User" %>
-<%@ page import="java.text.SimpleDateFormat" %><%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="club.banyuan.entity.Admin" %><%--
   Created by IntelliJ IDEA.
   User: edz
   Date: 2020/7/8
@@ -54,8 +55,9 @@
     </ul>
     <%
       List<Product> productList = (ArrayList<Product>)session.getAttribute("productListNotSelled");
+      Admin admin = (Admin) session.getAttribute("admin");
       User user = (User) session.getAttribute("user");
-      if(user != null){
+      if(user != null || admin != null){
       for (Product product : productList) {
 
     %>

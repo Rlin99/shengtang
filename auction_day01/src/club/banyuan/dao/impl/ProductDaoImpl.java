@@ -23,6 +23,8 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
             product = tableToClass(rs);
             productList.add(product);
         }
+        this.closeResource(rs);
+        this.closeResource();
         return productList;
     }
 
@@ -34,6 +36,8 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         if(rs.next()){
             product = tableToClass(rs);
         }
+        this.closeResource(rs);
+        this.closeResource();
         return product;
     }
 
@@ -47,6 +51,8 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
             product = tableToClass(rs);
             productList.add(product);
         }
+        this.closeResource(rs);
+        this.closeResource();
         return productList;
     }
 
@@ -56,6 +62,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         Object[] params = new Object[]{product.getName(),product.getDescribtion(),product.getStartTime(),
         product.getFinishTime(),product.getStartPrice(),product.getBasePrice(),product.getFileName(),product.getId()};
         int i = executeUpdate(sql, params);
+        this.closeResource();
         return i;
     }
 
@@ -66,6 +73,15 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         ,product.getStartPrice(),product.getBasePrice(),product.getFileName(),product.getIsSelled()};
         System.out.println(product);
         int i = executeInsert(sql, params);
+        this.closeResource();
+        return i;
+    }
+
+    @Override
+    public int deleteProduct(Integer id) throws Exception {
+        String sql = "delete from product where id = ?";
+        int i = executeUpdate(sql, new Object[]{id});
+        this.closeResource();
         return i;
     }
 

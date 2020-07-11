@@ -24,6 +24,7 @@
     <div class="sale">
         <h1 class="lf">在线拍卖系统</h1>
         <div class="logout right"><a href="#" title="注销">注销</a></div>
+        <div class="logout right"><a href="auctionResult.do">看竞拍结果</a></div>
     </div>
 
     <form action="search.do">
@@ -88,7 +89,6 @@
         function abc(){
 
             if(confirm("你真的确认要删除吗？请确认")){
-
                 return true;
             }
             else{

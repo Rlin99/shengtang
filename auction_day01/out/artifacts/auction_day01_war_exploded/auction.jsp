@@ -15,6 +15,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+
+
+<script>
+
+    $(function(){
+
+        // test 的点击事件
+        $("#flash").click(function(){
+            alert("点击了");
+            var url = "refurbish.do";
+            var data = {type:1};
+            $.ajax({
+                type : "get",
+                async : false,  //同步请求
+                url : url,
+                data : data,
+                timeout:1000,
+                success:function(dates){
+                    // $(datas).each(function(){
+                    //     alert(this.userName+" "+this.price+" "+this.createTime);
+                    // });
+                    $("#mainContent").html(dates);//要刷新的div
+                },
+                error: function() {
+                    // alert("失败，请稍后再试！");
+                }
+            });
+        });
+
+    })
+
+</script>
+
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>无标题文档</title>
@@ -31,6 +67,7 @@
     </div>
     <%
      Product product = (Product) session.getAttribute("product");
+     session.setAttribute("flashProductId", product.getId());
     %>
     <div class="items sg-font lf">
         <ul class="rows">
@@ -67,30 +104,33 @@
         </form>
     </div>
     <div class="top10">
-        <input name="" type="submit" value="刷 新" class="spbg buttombg f14" />
-        <input name="" type="submit" value="返回列表" class="spbg buttombg f14" />
+        <input id="flash" name="" type="button" value="刷 新" class="spbg buttombg f14" />
+        <a href="index.jsp"><input name="" type="button" value="返回列表" class="spbg buttombg f14" /></a>
     </div>
     <div class="offer">
         <h3>出价记录</h3>
-        <div class="items sg-font">
+        <div  class="items sg-font">
             <ul class="rows even strong">
                 <li>竞拍时间</li>
                 <li>竞拍价格</li>
                 <li class="borderno">竞拍人</li>
             </ul>
-            <%
-                List<Auction> auctionList = (ArrayList<Auction>)session.getAttribute("auctionList");
-                for (Auction auction : auctionList) {
+            <div id="mainContent" class="items sg-font">
+                <%
+                    List<Auction> auctionList = (ArrayList<Auction>)session.getAttribute("auctionList");
+                    for (Auction auction : auctionList) {
 
-            %>
-            <ul class="rows">
-                <li><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ").format(auction.getCreateTime())%></li>
-                <li><%=auction.getPrice()%></li>
-                <li class="borderno"><%=auction.getUesrName()%></li>
-            </ul>
-            <%
-                }
-            %>
+                %>
+                <ul class="rows">
+                    <li><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ").format(auction.getCreateTime())%></li>
+                    <li><%=auction.getPrice()%></li>
+                    <li class="borderno"><%=auction.getUesrName()%></li>
+                </ul>
+                <%
+                    }
+                %>
+            </div>
+
 
         </div>
     </div>

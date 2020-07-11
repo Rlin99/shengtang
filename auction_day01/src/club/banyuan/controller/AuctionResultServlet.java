@@ -32,6 +32,15 @@ public class AuctionResultServlet extends HttpServlet {
 
 
             session.setAttribute("productListIsSelled", productListIsSelled);
+
+            List<Product> productListNotSelled = new ArrayList<Product>();
+            productListNotSelled = productServiceDao.getProductBySell(0);
+            for (Product product : productListNotSelled) {
+                System.out.println(product.getName());
+            }
+
+
+            session.setAttribute("productListNotSelled", productListNotSelled);
         } catch (Exception e) {
             e.printStackTrace();
         }

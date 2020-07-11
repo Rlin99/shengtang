@@ -10,4 +10,5 @@ public interface ProductServiceDao {
     public List<Product> getProductBySell(Integer isSelled) throws Exception;
     public int updateProduct(Product product) throws Exception;
     public int addProduct(Product product) throws Exception;
+    public int deleteProduct(Integer id ) throws  Exception;
 }

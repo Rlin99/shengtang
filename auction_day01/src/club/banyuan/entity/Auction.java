@@ -14,6 +14,18 @@ public class Auction {
         super();
     }
 
+    @Override
+    public String toString() {
+        return "Auction{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", uesrName='" + uesrName + '\'' +
+                ", productId=" + productId +
+                ", createTime=" + createTime +
+                ", price=" + price +
+                '}';
+    }
+
     public String getUesrName() {
         return uesrName;
     }

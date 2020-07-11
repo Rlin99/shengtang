@@ -22,7 +22,6 @@ public class SearchServlet extends HttpServlet {
         String finishTime = request.getParameter("finishTime");
         String startPrice = request.getParameter("startPrice");
 
-
         String sql = "select * from product where isSelled = 0 ";
 
         if(name != ""){

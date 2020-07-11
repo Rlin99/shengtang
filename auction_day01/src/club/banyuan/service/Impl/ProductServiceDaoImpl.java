@@ -39,4 +39,10 @@ public class ProductServiceDaoImpl implements ProductServiceDao {
         ProductDao productDao = new ProductDaoImpl(JdbcUtils.getConnection());
         return productDao.addProduct(product);
     }
+
+    @Override
+    public int deleteProduct(Integer id) throws Exception {
+        ProductDao productDao = new ProductDaoImpl(JdbcUtils.getConnection());
+        return productDao.deleteProduct(id);
+    }
 }

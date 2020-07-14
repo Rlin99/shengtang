@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.banyuan.dao.UserDao">
+
+    <resultMap id="userMap" type="club.banyuan.entity.User">
+        <id column="id" property="id"/>
+        <result column="loginName" property="login_name"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+    </resultMap>
+    <!--    id : 接口中方法名-->
+    <!--    resultType:对查询结果中一行数据封装后的类型-->
+    <!--    parameterType : 参数类型-->
+    <select id="getUserById" resultMap="userMap" parameterType="int">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="getLoginUser" resultType="club.banyuan.entity.User" parameterType="Map">
+        select * from user where userName = #{userName} and password = #{password}
+    </select>
+
+    <select id="selectLoginName" resultType="User" parameterType="String">
+        select * from user where userName = #{userName}
+    </select>
+
+
+
+
+    <!--    实体类属性名 -&#45;&#45; sql参数名（保持一致）-->
+    <!--    一般和实体类的属性名保持一致-->
+
+    <!--    增删改返回值是操作数据表的记录数，统一为：int-->
+    <!--    selectKey会将keyColumn中的值赋值给keyProperty中设置的属性-->
+    <!--    此处会把最后的id列值赋值给User对象的id属性-->
+    <insert id="add" parameterType="club.banyuan.entity.User">
+        <selectKey keyColumn="id" keyProperty="id" resultType="int">
+            select last_insert_id()
+        </selectKey>
+        insert into user(userName,password,idCard,phone,address,postCode)
+        values(#{userName},#{password},#{idCard},#{phone},#{address},#{postCode})
+    </insert>
+
+
+</mapper>

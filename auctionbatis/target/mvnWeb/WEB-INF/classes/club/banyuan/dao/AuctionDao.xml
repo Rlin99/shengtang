@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.banyuan.dao.AuctionDao">
+    <select id="selectByProductId" parameterType="int" resultType="club.banyuan.entity.Auction">
+        select * from auction where productId = #{id}
+    </select>
+    <select id="getProductHighPrice" parameterType="int" resultType="club.banyuan.entity.Auction">
+        select * from auction where productId = #{id} order by price desc limit 1
+    </select>
+    <insert id="add" parameterType="club.banyuan.entity.Auction">
+        insert into auction values (null,#{userId},#{userName},#{productId},#{createTime},#{price})
+    </insert>
+
+</mapper>

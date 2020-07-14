@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <typeAliases>
+        <package name="club.banyuan.entity"/>
+    </typeAliases>
+
+    <!-- 配置mysql环境 -->
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <!--            针对数据库连接配置，type设置为pooled，数据库连接获取的方式是使用连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${DRIVER}"/>
+                <property name="url" value="${URL}"/>
+                <property name="username" value="${USERNAME}"/>
+                <property name="password" value="${PWD}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- MyBatis Mapper文件的位置 -->
+    <mappers>
+        <mapper resource="club/banyuan/dao/UserDao.xml"/>
+        <mapper resource="club/banyuan/dao/ProductDao.xml"/>
+        <mapper resource="club/banyuan/dao/AuctionDao.xml"/>
+        <mapper resource="club/banyuan/dao/AdminDao.xml"/>
+    </mappers>
+</configuration>
+

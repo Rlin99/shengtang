@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.banyuan.dao.ProductDao">
+
+
+    <!--    id : 接口中方法名-->
+    <!--    resultType:对查询结果中一行数据封装后的类型-->
+    <!--    parameterType : 参数类型-->
+    <select id="getProductById" resultType="club.banyuan.entity.Product" parameterType="int">
+        select * from product where id=#{id}
+    </select>
+
+    <select id="getProductBySell" resultType="club.banyuan.entity.Product" parameterType="int">
+        select * from product where isSelled = #{isSell}
+    </select>
+
+    <update id="updateProduct" parameterType="club.banyuan.entity.Product">
+        update product set name = #{name}, describtion = #{describtion}, startTime = #{startTime},
+        finishTime=#{finishTime},startPrice=#{startPrice},basePrice=#{basePrice},fileName=#{fileName},isSelled=#{isSelled}
+        where id = #{id}
+    </update>
+
+    <insert id="addProduct" parameterType="club.banyuan.entity.Product">
+        insert into product values (null,#{name},#{describtion},#{startTime},#{finishTime},#{startPrice},#{basePrice},#{fileName},#{isSelled})
+    </insert>
+
+    <delete id="deleteProduct" parameterType="int">
+        delete from product where id = #{id}
+    </delete>
+
+    <select id="getProductByOpinion" resultType="club.banyuan.entity.Product" parameterType="Map">
+        select * from product where 1=1
+        <if test="name != null and name != ''">
+        and name like #{name}
+        </if>
+        <if test="describtion != null and describtion != ''">
+            and describtion like #{describtion}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and startTime >= #{startTime}
+        </if>
+        <if test="finishTime != null and finishTime != ''">
+            and finishTime &lt;= #{finishTime}
+        </if>
+    </select>
+</mapper>

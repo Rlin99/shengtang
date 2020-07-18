@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.banyuan.dao.ProductDao">
+
+    <select id="getProductByName" resultType="club.banyuan.entity.Product" parameterType="String">
+        select * from product where name like #{name}
+    </select>
+
+    <select id="getProductById" resultType="club.banyuan.entity.Product" parameterType="int">
+        select * from product where id = #{id}
+    </select>
+
+</mapper>

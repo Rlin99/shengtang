@@ -23,7 +23,7 @@ public class OrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Double sumcost = (Double) session.getAttribute("sumcost");
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
 
         Order order = new Order();
@@ -35,42 +35,42 @@ public class OrderServlet extends HttpServlet {
         order.setCreateTime(date);
 
         //按照时间随机生成订单号
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-        String newDate=sdf.format(new Date());
-        String result="";
-         Random random=new Random();
-        for(int i=0;i<3;i++){
-            result+=random.nextInt(10);
-         }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String newDate = sdf.format(new Date());
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < 3; i++) {
+            result += random.nextInt(10);
+        }
 
-        order.setSerialNumber(newDate+result);
+        order.setSerialNumber(newDate + result);
 
 
         OrderService orderService = new OrderServiceImpl();
 
 //            int orderId = orderService.addOrder(order);
-            List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
-            Map<Product,Integer> cart = (Map<Product, Integer>) session.getAttribute("cart");
-            for (Product product : cart.keySet()) {
-                OrderDetail orderDetail = new OrderDetail();
+        List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+        Map<Product, Integer> cart = (Map<Product, Integer>) session.getAttribute("cart");
+        for (Product product : cart.keySet()) {
+            OrderDetail orderDetail = new OrderDetail();
 //                orderDetail.setOrderId(orderId);
-                orderDetail.setProductId(product.getId());
-                orderDetail.setQuantity(cart.get(product));
-                orderDetail.setCost((Double) (cart.get(product) * product.getPrice()));
+            orderDetail.setProductId(product.getId());
+            orderDetail.setQuantity(cart.get(product));
+            orderDetail.setCost((Double) (cart.get(product) * product.getPrice()));
 //                orderService.addOrderDetail(orderDetail);
-                orderDetailList.add(orderDetail);
-            }
-            orderService.createOrder(order, orderDetailList);
+            orderDetailList.add(orderDetail);
+        }
+        orderService.createOrder(order, orderDetailList);
 
-            session.setAttribute("serialNumber", order.getSerialNumber());
+        session.setAttribute("serialNumber", order.getSerialNumber());
 
-            //获取用户订单信息
-            List<Order> orderList = new ArrayList<Order>();
-            orderList = orderService.selectOrderByUserId(user.getId());
-            session.setAttribute("orderList", orderList);
+        //获取用户订单信息
+        List<Order> orderList = new ArrayList<Order>();
+        orderList = orderService.selectOrderByUserId(user.getId());
+        session.setAttribute("orderList", orderList);
 
 
-            request.getRequestDispatcher("BuyCar_Three.jsp").forward(request, response);
+        request.getRequestDispatcher("BuyCar_Three.jsp").forward(request, response);
 
     }
 

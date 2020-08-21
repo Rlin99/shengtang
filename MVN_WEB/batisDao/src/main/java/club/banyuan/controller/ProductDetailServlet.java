@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ProductDetailServlet",urlPatterns = "/detail.do")
+@WebServlet(name = "ProductDetailServlet", urlPatterns = "/detail.do")
 public class ProductDetailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        缺id的非空判断
@@ -19,14 +19,14 @@ public class ProductDetailServlet extends HttpServlet {
         ProductService productService = new ProductServiceImpl();
         try {
             Product product = productService.getProductById(id);
-            request.setAttribute("product",product);
+            request.setAttribute("product", product);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        request.getRequestDispatcher("product.jsp").forward(request,response);
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 }

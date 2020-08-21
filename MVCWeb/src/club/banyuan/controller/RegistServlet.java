@@ -23,9 +23,9 @@ public class RegistServlet extends HttpServlet {
         user.setUserName(request.getParameter("userName"));
         user.setPassword(request.getParameter("password"));
         String sex = request.getParameter("sex");
-        if(sex.equals("男")){
+        if (sex.equals("男")) {
             user.setSex(1);
-        }else {
+        } else {
             user.setSex(0);
         }
         user.setEmail(request.getParameter("email"));
@@ -34,16 +34,16 @@ public class RegistServlet extends HttpServlet {
         try {
             UserService userService = new UserServiceImpl();
             int id = userService.regist(user);
-            if(id>0){
+            if (id > 0) {
                 flag = true;
             }
             System.out.println(id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if(flag){
+        if (flag) {
             response.sendRedirect("Login.html");
-        }else{
+        } else {
             response.sendRedirect("Regist.html");
         }
     }

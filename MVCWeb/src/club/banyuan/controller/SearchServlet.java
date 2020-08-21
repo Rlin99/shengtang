@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "SearchServlet",urlPatterns = "/search.do")
+@WebServlet(name = "SearchServlet", urlPatterns = "/search.do")
 public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String productName = request.getParameter("productName");

@@ -17,21 +17,21 @@ import java.util.List;
 public class ConfirmOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if((User)session.getAttribute("user") == null){
+        if ((User) session.getAttribute("user") == null) {
             request.getRequestDispatcher("login.html").forward(request, response);
             return;
         }
-            //商品总价，默认地址
+        //商品总价，默认地址
 
         //获取address
         List<Address> addressList = new ArrayList<Address>();
-        addressList = (ArrayList<Address>)session.getAttribute("addressList");
-            for (Address address : addressList) {
-                if(address.getIsDefault() == 1){
-                    session.setAttribute("buyCarAddress", address);
-                }
+        addressList = (ArrayList<Address>) session.getAttribute("addressList");
+        for (Address address : addressList) {
+            if (address.getIsDefault() == 1) {
+                session.setAttribute("buyCarAddress", address);
             }
-            request.getRequestDispatcher("BuyCar_Two.jsp").forward(request, response);
+        }
+        request.getRequestDispatcher("BuyCar_Two.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

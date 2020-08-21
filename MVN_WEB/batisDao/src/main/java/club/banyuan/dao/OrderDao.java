@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface OrderDao {
     public int addOrder(Order order);
+
     public List<Order> selectByUserId(Integer userId);
 }

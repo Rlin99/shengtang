@@ -20,24 +20,24 @@ public class RegistServlet extends HttpServlet {
         user.setUserName(request.getParameter("userName"));
         user.setPassword(request.getParameter("password"));
         String sex = request.getParameter("sex");
-        if(sex.equals("男")){
+        if (sex.equals("男")) {
             user.setSex(1);
-        }else {
+        } else {
             user.setSex(0);
         }
         user.setEmail(request.getParameter("email"));
         user.setMobile(request.getParameter("mobile"));
         boolean flag = false;
-            UserService userService = new UserServiceImpl();
-            int id = userService.regist(user);
-            if(id>0){
-                flag = true;
-            }
-            System.out.println(id);
+        UserService userService = new UserServiceImpl();
+        int id = userService.regist(user);
+        if (id > 0) {
+            flag = true;
+        }
+        System.out.println(id);
 
-        if(flag){
+        if (flag) {
             response.sendRedirect("login.jsp");
-        }else{
+        } else {
             response.sendRedirect("Regist.jsp");
         }
     }

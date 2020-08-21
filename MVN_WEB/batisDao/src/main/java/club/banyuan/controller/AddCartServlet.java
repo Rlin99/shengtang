@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "AddCartServlet",urlPatterns = "/addCart.do")
+@WebServlet(name = "AddCartServlet", urlPatterns = "/addCart.do")
 public class AddCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.valueOf(request.getParameter("productId"));
@@ -26,22 +26,22 @@ public class AddCartServlet extends HttpServlet {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        if(product!=null) {
+        if (product != null) {
             HttpSession session = request.getSession();
             Map<Product, Integer> cart = null;
-            if(null == session.getAttribute("cart")){
+            if (null == session.getAttribute("cart")) {
                 cart = new HashMap<Product, Integer>();
-            }else {
-                cart = (Map<Product,Integer>)session.getAttribute("cart");
+            } else {
+                cart = (Map<Product, Integer>) session.getAttribute("cart");
             }
-            cart.put(product,num);
-            session.setAttribute("cart",cart);
+            cart.put(product, num);
+            session.setAttribute("cart", cart);
         }
 
-        request.getRequestDispatcher("buycar.jsp").forward(request,response);
+        request.getRequestDispatcher("buycar.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "LoginServlet",urlPatterns = "/login.do")
+@WebServlet(name = "LoginServlet", urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String loginName = request.getParameter("loginName");
@@ -22,19 +22,19 @@ public class LoginServlet extends HttpServlet {
 //        调用service处理登录请求
         UserService userService = new UserServiceImpl();
         try {
-            User user = userService.login(loginName,password);
-            if(user!=null){
-                request.setAttribute("user",user);
-                request.getRequestDispatcher("index.jsp").forward(request,response);
-                return ;
+            User user = userService.login(loginName, password);
+            if (user != null) {
+                request.setAttribute("user", user);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                return;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        request.getRequestDispatcher("Login.html").forward(request,response);
+        request.getRequestDispatcher("Login.html").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 }

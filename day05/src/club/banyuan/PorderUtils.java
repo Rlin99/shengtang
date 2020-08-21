@@ -5,10 +5,10 @@ import java.sql.*;
 
 public class PorderUtils {
 
-    public static void addOrder(Integer userId, String loginName, String userAddress, Date createTime, Integer cost){
+    public static void addOrder(Integer userId, String loginName, String userAddress, Date createTime, Integer cost) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        try{
+        try {
             conn = JdbcUtils.getConnection();
             String sql = "insert into porder values(null,?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
@@ -18,14 +18,14 @@ public class PorderUtils {
             pstmt.setDate(4, (java.sql.Date) createTime);
             pstmt.setInt(5, cost);
             int row = pstmt.executeUpdate();
-            if(row >= 1){
+            if (row >= 1) {
                 System.out.println("订单创建成功！");
-            }else{
+            } else {
                 System.out.println("订单创建失败！");
             }
-        }catch (SQLException e ){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn);
             } catch (SQLException throwables) {
@@ -34,7 +34,7 @@ public class PorderUtils {
         }
     }
 
-    public static Integer selectId(Integer userId, String loginName, Integer cost){
+    public static Integer selectId(Integer userId, String loginName, Integer cost) {
 
         Integer id = 0;
 
@@ -44,7 +44,7 @@ public class PorderUtils {
 
         ResultSet rs = null;
 
-        try{
+        try {
             conn = JdbcUtils.getConnection();
 
             String sql = "select id from porder where userId = ? and loginName = ? and cost = ?";
@@ -57,13 +57,13 @@ public class PorderUtils {
 
             rs = pstmt.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 id = rs.getInt(1);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn, rs);
             } catch (SQLException throwables) {
@@ -73,7 +73,7 @@ public class PorderUtils {
         return id;
     }
 
-    public static void SelectAll(){
+    public static void SelectAll() {
 
         Connection conn = null;
 
@@ -82,7 +82,7 @@ public class PorderUtils {
         ResultSet rs = null;
 
 
-        try{
+        try {
             conn = JdbcUtils.getConnection();
 
             String sql = "select p.id,p.userId,p.loginName,p.userAddress,p.createTime,pd.porderId as 订单ID ,pd.productId as 商品ID,pd.quantity,pd.cost from porder p left join porder_detail pd on p.id = pd.porderId;";
@@ -92,10 +92,10 @@ public class PorderUtils {
 
             rs = pstmt.executeQuery(sql);
 
-            while(rs.next()){
+            while (rs.next()) {
                 Integer pid = rs.getInt(1);
                 Integer puserId = rs.getInt(2);
-                String name =rs.getString(3);
+                String name = rs.getString(3);
                 String address = rs.getString(4);
                 Date date = rs.getDate(5);
                 Integer porderId = rs.getInt(6);
@@ -107,7 +107,7 @@ public class PorderUtils {
                                 "id=" + pid +
                                 ", userId=" + puserId +
                                 ", loginName='" + name + '\'' +
-                                ", userAddress='" + address  +
+                                ", userAddress='" + address +
                                 ", createTime=" + date +
                                 ", 订单ID=" + porderId +
                                 ", 商品ID=" + productId +
@@ -117,9 +117,9 @@ public class PorderUtils {
                 );
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn, rs);
             } catch (SQLException throwables) {

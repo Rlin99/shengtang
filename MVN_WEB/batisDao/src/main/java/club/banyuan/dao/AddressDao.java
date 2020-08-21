@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface AddressDao {
     public int addAddress(Address address);
+
     public List<Address> getAddressById(Integer userId);
 }

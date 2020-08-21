@@ -10,24 +10,24 @@ public class JdbcUtils {
 
     //连接数据库
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL,USER, PWD);
+        return DriverManager.getConnection(URL, USER, PWD);
     }
 
     //关闭数据库
     public static void close(Statement stmt, Connection conn) throws SQLException {
-        if( stmt != null){
-                stmt.close();
+        if (stmt != null) {
+            stmt.close();
         }
 
-        if( conn != null){
-                conn.close();
+        if (conn != null) {
+            conn.close();
         }
     }
 
     //关闭数据库
     public static void close(Statement stmt, Connection conn, ResultSet rs) throws SQLException {
-        if( rs != null){
-                rs.close();
+        if (rs != null) {
+            rs.close();
         }
         close(stmt, conn);
     }

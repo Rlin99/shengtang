@@ -20,22 +20,22 @@ public class AddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String address = request.getParameter("country") + request.getParameter("province") +
-                         request.getParameter("city") + request.getParameter("area");
+                request.getParameter("city") + request.getParameter("area");
         session.setAttribute("address", address);
         session.setAttribute("detailAddress", request.getParameter("detailAddress"));
         session.setAttribute("userName", request.getParameter("userName"));
         session.setAttribute("phone", request.getParameter("phone"));
-        System.out.println(session.getAttribute("address").toString()+session.getAttribute("detailAddress")+session.getAttribute("userName")+session.getAttribute("phone"));
+        System.out.println(session.getAttribute("address").toString() + session.getAttribute("detailAddress") + session.getAttribute("userName") + session.getAttribute("phone"));
 
         //添加address
         UserService userService = new UserServiceImpl();
         Address address1 = new Address();
         address1.setUserId((Integer) session.getAttribute("userId"));
-        address1.setAddress(session.getAttribute("address").toString()+"@"+session.getAttribute("detailAddress").toString());
+        address1.setAddress(session.getAttribute("address").toString() + "@" + session.getAttribute("detailAddress").toString());
         Date date = new Date();
         address1.setCreateTime(date);
         address1.setIsDefault(0);
-        address1.setRemark(session.getAttribute("userName").toString()+"@"+session.getAttribute("phone"));
+        address1.setRemark(session.getAttribute("userName").toString() + "@" + session.getAttribute("phone"));
         try {
             int id = userService.addAddress(address1);
             System.out.println(id);

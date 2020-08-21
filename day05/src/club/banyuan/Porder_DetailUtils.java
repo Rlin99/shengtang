@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class Porder_DetailUtils {
 
-    public static void addDetail(Integer porderId, Integer productId, Integer quantity, Integer cost){
+    public static void addDetail(Integer porderId, Integer productId, Integer quantity, Integer cost) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        try{
+        try {
             conn = JdbcUtils.getConnection();
             String sql = "insert into porder_detail values(null,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
@@ -18,14 +18,14 @@ public class Porder_DetailUtils {
             pstmt.setInt(3, quantity);
             pstmt.setInt(4, cost);
             int row = pstmt.executeUpdate();
-            if(row >= 1){
+            if (row >= 1) {
                 System.out.println("订单详情创建成功！");
-            }else{
+            } else {
                 System.out.println("订单详情创建失败！");
             }
-        }catch (SQLException e ){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn);
             } catch (SQLException throwables) {

@@ -25,16 +25,16 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         StringBuffer sql = new StringBuffer("select id,name,description,price,stock,categoryLevel1Id,categoryLevel2Id,categoryLevel3Id,fileName,isDelete from product where name like ? ");
         ResultSet rs = null;
 
-        try{
+        try {
             paramsList.add("%" + proName + "%");
             rs = executeQuery(sql.toString(), paramsList.toArray());
-            while(rs.next()){
+            while (rs.next()) {
                 Product product = this.tableToClass(rs);
                 productList.add(product);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             this.closeResource(rs);
             this.closeResource();
         }
@@ -47,7 +47,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
         ResultSet resultSet = null;
         Product product = null;
         try {
-            Object params[] = new Object[] { id };
+            Object params[] = new Object[]{id};
             resultSet = this.executeQuery(sql, params);
             while (resultSet.next()) {
                 product = tableToClass(resultSet);

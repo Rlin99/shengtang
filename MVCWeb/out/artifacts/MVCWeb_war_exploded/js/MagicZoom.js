@@ -10,9 +10,11 @@ if (W.indexOf("opera") != -1) {
     MagicZoom_ua = 'gecko'
 }
 var MagicZoom_zooms = new Array();
+
 function _el(id) {
     return document.getElementById(id)
 };
+
 function MagicZoom_getBounds(e) {
     if (e.getBoundingClientRect) {
         var r = e.getBoundingClientRect();
@@ -33,6 +35,7 @@ function MagicZoom_getBounds(e) {
         }
     }
 }
+
 function MagicZoom_getEventBounds(e) {
     var x = 0;
     var y = 0;
@@ -57,26 +60,29 @@ function MagicZoom_getEventBounds(e) {
         'y': y
     }
 }
+
 function MagicView_ia() {
     return false
 };
-var MagicZoom_extendElement = function() {
+var MagicZoom_extendElement = function () {
     var args = arguments;
     if (!args[1]) args = [this, args[0]];
     for (var property in args[1]) args[0][property] = args[1][property];
     return args[0]
 };
+
 function MagicZoom_addEventListener(obj, event, listener) {
     if (MagicZoom_ua == 'gecko' || MagicZoom_ua == 'opera' || MagicZoom_ua == 'safari') {
         try {
             obj.addEventListener(event, listener, false)
-        } catch(e) {
+        } catch (e) {
             alert("MagicZoom error: " + e + ", event=" + event)
         }
     } else if (MagicZoom_ua == 'msie') {
         obj.attachEvent("on" + event, listener)
     }
 };
+
 function MagicZoom_removeEventListener(obj, event, listener) {
     if (MagicZoom_ua == 'gecko' || MagicZoom_ua == 'opera' || MagicZoom_ua == 'safari') {
         obj.removeEventListener(event, listener, false)
@@ -84,22 +90,26 @@ function MagicZoom_removeEventListener(obj, event, listener) {
         obj.detachEvent("on" + event, listener)
     }
 };
+
 function MagicZoom_concat() {
     var result = [];
     for (var i = 0; i < arguments.length; i++) for (var j = 0; j < arguments[i].length; j++) result.push(arguments[i][j]);
     return result
 };
+
 function MagicZoom_withoutFirst(sequence, skip) {
     result = [];
     for (var i = skip; i < sequence.length; i++) result.push(sequence[i]);
     return result
 };
+
 function MagicZoom_createMethodReference(object, methodName) {
     var args = MagicZoom_withoutFirst(arguments, 2);
-    return function() {
+    return function () {
         object[methodName].apply(object, MagicZoom_concat(arguments, args))
     }
 };
+
 function MagicZoom_stopEventPropagation(e) {
     if (MagicZoom_ua == 'gecko' || MagicZoom_ua == 'safari' || MagicZoom_ua == 'opera') {
         e.cancelBubble = true;
@@ -109,6 +119,7 @@ function MagicZoom_stopEventPropagation(e) {
         window.event.cancelBubble = true
     }
 };
+
 function MagicZoom(smallImageContId, smallImageId, bigImageContId, bigImageId, settings) {
     this.recalculating = false;
     this.smallImageCont = _el(smallImageContId);
@@ -145,13 +156,13 @@ function MagicZoom(smallImageContId, smallImageId, bigImageContId, bigImageId, s
     MagicZoom_zooms.push(this);
     this.checkcoords_ref = MagicZoom_createMethodReference(this, "checkcoords")
 };
-MagicZoom.prototype.stopZoom = function() {
+MagicZoom.prototype.stopZoom = function () {
     MagicZoom_removeEventListener(window.document, "mousemove", this.checkcoords_ref);
     if (this.settings["position"] == "custom") {
         _el(this.smallImageCont.id + "-big").removeChild(this.bigImageCont)
     }
 };
-MagicZoom.prototype.checkcoords = function(e) {
+MagicZoom.prototype.checkcoords = function (e) {
     var y = 0;
     var x = 0;
     r = MagicZoom_getEventBounds(e);
@@ -191,15 +202,15 @@ MagicZoom.prototype.checkcoords = function(e) {
     }
     return true
 };
-MagicZoom.prototype.mousedown = function(e) {
+MagicZoom.prototype.mousedown = function (e) {
     MagicZoom_stopEventPropagation(e);
     this.smallImageCont.style.cursor = 'move'
 };
-MagicZoom.prototype.mouseup = function(e) {
+MagicZoom.prototype.mouseup = function (e) {
     MagicZoom_stopEventPropagation(e);
     this.smallImageCont.style.cursor = 'default'
 };
-MagicZoom.prototype.mousemove = function(e) {
+MagicZoom.prototype.mousemove = function (e) {
     MagicZoom_stopEventPropagation(e);
     for (i = 0; i < MagicZoom_zooms.length; i++) {
         if (MagicZoom_zooms[i] != this) {
@@ -252,14 +263,14 @@ MagicZoom.prototype.mousemove = function(e) {
     }
     setTimeout(MagicZoom_createMethodReference(this, "showrect"), 10)
 };
-MagicZoom.prototype.showrect = function() {
+MagicZoom.prototype.showrect = function () {
     this.pup.style.left = (this.positionX - this.popupSizeX / 2) + 'px';
     this.pup.style.top = (this.positionY - this.popupSizeY / 2) + 'px';
     this.pup.style.visibility = "visible";
     perX = parseInt(this.pup.style.left) * (this.bigImageSizeX / this.smallImageSizeX);
     perY = parseInt(this.pup.style.top) * (this.bigImageSizeY / this.smallImageSizeY);
-    this.bigImage.style.left = ( - perX) + 'px';
-    this.bigImage.style.top = ( - perY) + 'px';
+    this.bigImage.style.left = (-perX) + 'px';
+    this.bigImage.style.top = (-perY) + 'px';
     this.bigImageCont.style.display = 'block';
     this.bigImageCont.style.visibility = 'visible';
     this.bigImage.style.display = 'block';
@@ -267,7 +278,7 @@ MagicZoom.prototype.showrect = function() {
     this.recalculating = false;
     this.bigImageCont.style.left = this.bigImageContStyleLeft
 };
-MagicZoom.prototype.hiderect = function() {
+MagicZoom.prototype.hiderect = function () {
     if (this.settings && this.settings["bigImage_always_visible"] == true) return;
     if (this.pup) {
         this.pup.style.visibility = "hidden"
@@ -278,7 +289,7 @@ MagicZoom.prototype.hiderect = function() {
         this.smallImageCont.style.zIndex = 0
     }
 };
-MagicZoom.prototype.recalculatePopupDimensions = function() {
+MagicZoom.prototype.recalculatePopupDimensions = function () {
     this.popupSizeX = (parseInt(this.bigImageCont.style.width) - 0) / (this.bigImageSizeX / this.smallImageSizeX);
     if (this.settings && this.settings["header"] != "") {
         this.popupSizeY = (parseInt(this.bigImageCont.style.height) - 0 - 0) / (this.bigImageSizeY / this.smallImageSizeY)
@@ -294,7 +305,7 @@ MagicZoom.prototype.recalculatePopupDimensions = function() {
     this.pup.style.width = this.popupSizeX + 'px';
     this.pup.style.height = this.popupSizeY + 'px'
 };
-MagicZoom.prototype.initPopup = function() {
+MagicZoom.prototype.initPopup = function () {
     this.pup = document.createElement("DIV");
     this.pup.className = 'MagicZoomPup';
     this.pup.style.zIndex = 10;
@@ -311,7 +322,7 @@ MagicZoom.prototype.initPopup = function() {
     this.smallImageCont.onselectstart = MagicView_ia;
     this.smallImageCont.oncontextmenu = MagicView_ia
 };
-MagicZoom.prototype.initBigContainer = function() {
+MagicZoom.prototype.initBigContainer = function () {
     var bigimgsrc = this.bigImage.src;
     while (this.bigImageCont.firstChild) {
         this.bigImageCont.removeChild(this.bigImageCont.firstChild)
@@ -335,7 +346,7 @@ MagicZoom.prototype.initBigContainer = function() {
     this.bigImage.style.position = 'relative';
     ar1.appendChild(this.bigImage)
 };
-MagicZoom.prototype.initZoom = function() {
+MagicZoom.prototype.initZoom = function () {
     if (this.loadingCont != null && !this.bigImage.complete && this.smallImage.width != 0 && this.smallImage.height != 0) {
         this.loadingCont.style.left = (parseInt(this.smallImage.width) / 2 - parseInt(this.loadingCont.offsetWidth) / 2) + 'px';
         this.loadingCont.style.top = (parseInt(this.smallImage.height) / 2 - parseInt(this.loadingCont.offsetHeight) / 2) + 'px';
@@ -366,25 +377,25 @@ MagicZoom.prototype.initZoom = function() {
     this.bigImageCont.style.left = this.smallImage.width + 15 + 'px';
     this.bigImageCont.style.top = '0px';
     switch (this.settings['position']) {
-    case 'left':
-        this.bigImageCont.style.left = '-' + (15 + parseInt(this.bigImageCont.style.width)) + 'px';
-        break;
-    case 'bottom':
-        this.bigImageCont.style.top = this.smallImage.height + 15 + 'px';
-        this.bigImageCont.style.left = '0px';
-        break;
-    case 'top':
-        this.bigImageCont.style.top = '-' + (15 + parseInt(this.bigImageCont.style.height)) + 'px';
-        this.bigImageCont.style.left = '0px';
-        break;
-    case 'custom':
-        this.bigImageCont.style.left = '0px';
-        this.bigImageCont.style.top = '0px';
-        break;
-    case 'inner':
-        this.bigImageCont.style.left = '0px';
-        this.bigImageCont.style.top = '0px';
-        break
+        case 'left':
+            this.bigImageCont.style.left = '-' + (15 + parseInt(this.bigImageCont.style.width)) + 'px';
+            break;
+        case 'bottom':
+            this.bigImageCont.style.top = this.smallImage.height + 15 + 'px';
+            this.bigImageCont.style.left = '0px';
+            break;
+        case 'top':
+            this.bigImageCont.style.top = '-' + (15 + parseInt(this.bigImageCont.style.height)) + 'px';
+            this.bigImageCont.style.left = '0px';
+            break;
+        case 'custom':
+            this.bigImageCont.style.left = '0px';
+            this.bigImageCont.style.top = '0px';
+            break;
+        case 'inner':
+            this.bigImageCont.style.left = '0px';
+            this.bigImageCont.style.top = '0px';
+            break
     }
     this.bigImageContStyleLeft = this.bigImageCont.style.left;
     if (this.pup) {
@@ -403,7 +414,7 @@ MagicZoom.prototype.initZoom = function() {
         this.showrect()
     }
 };
-MagicZoom.prototype.replaceZoom = function(e, ael) {
+MagicZoom.prototype.replaceZoom = function (e, ael) {
     if (ael.href == this.bigImage.src) return;
     var newBigImage = document.createElement("IMG");
     newBigImage.id = this.bigImage.id;
@@ -416,33 +427,37 @@ MagicZoom.prototype.replaceZoom = function(e, ael) {
     this.safariOnLoadStarted = false;
     this.initZoom()
 };
+
 function MagicZoom_findSelectors(id, zoom) {
     var aels = window.document.getElementsByTagName("li");
     for (var i = 0; i < aels.length; i++) {
         if (aels[i].getAttribute("rel") == id) {
             MagicZoom_addEventListener(aels[i], "click",
-            function(event) {
-                if (MagicZoom_ua != 'msie') {
-                    this.blur()
-                } else {
-                    window.focus()
-                }
-                MagicZoom_stopEventPropagation(event);
-                return false
-            });
+                function (event) {
+                    if (MagicZoom_ua != 'msie') {
+                        this.blur()
+                    } else {
+                        window.focus()
+                    }
+                    MagicZoom_stopEventPropagation(event);
+                    return false
+                });
             MagicZoom_addEventListener(aels[i], zoom.settings['thumb_change'], MagicZoom_createMethodReference(zoom, "replaceZoom", aels[i]));
             aels[i].style.outline = '0';
             aels[i].mzextend = MagicZoom_extendElement;
             aels[i].mzextend({
                 zoom: zoom,
-                selectThisZoom: function() {
+                selectThisZoom: function () {
                     this.zoom.replaceZoom(null, this)
                 }
             })
         }
     }
 };
-function MagicZoom_stopZooms() {};
+
+function MagicZoom_stopZooms() {
+};
+
 function MagicZoom_findZooms() {
     var loadingText = 'Loading Zoom';
     var loadingImg = '';
@@ -471,15 +486,15 @@ function MagicZoom_findZooms() {
             aels[i].style.outline = '0';
             aels[i].style.textDecoration = 'none';
             MagicZoom_addEventListener(aels[i], "click",
-            function(event) {
-                if (MagicZoom_ua != 'msie') {
-                    this.blur()
-                } else {
-                    window.focus()
-                }
-                MagicZoom_stopEventPropagation(event);
-                return false
-            });
+                function (event) {
+                    if (MagicZoom_ua != 'msie') {
+                        this.blur()
+                    } else {
+                        window.focus()
+                    }
+                    MagicZoom_stopEventPropagation(event);
+                    return false
+                });
             if (aels[i].id == '') {
                 aels[i].id = "sc" + rand
             }
@@ -521,21 +536,21 @@ function MagicZoom_findZooms() {
             var position = 'right';
             if (matches) {
                 switch (matches[3]) {
-                case 'left':
-                    position = 'left';
-                    break;
-                case 'bottom':
-                    position = 'bottom';
-                    break;
-                case 'top':
-                    position = 'top';
-                    break;
-                case 'custom':
-                    position = 'custom';
-                    break;
-                case 'inner':
-                    position = 'inner';
-                    break
+                    case 'left':
+                        position = 'left';
+                        break;
+                    case 'bottom':
+                        position = 'bottom';
+                        break;
+                    case 'top':
+                        position = 'top';
+                        break;
+                    case 'custom':
+                        position = 'custom';
+                        break;
+                    case 'inner':
+                        position = 'inner';
+                        break
                 }
             }
             re = new RegExp(/drag\-mode(\s+)?:(\s+)?(true|false)/i);
@@ -590,5 +605,7 @@ function MagicZoom_findZooms() {
 };
 if (MagicZoom_ua == 'msie') try {
     document.execCommand("BackgroundImageCache", false, true)
-} catch(e) {};
+} catch (e) {
+}
+;
 MagicZoom_addEventListener(window, "load", MagicZoom_findZooms);

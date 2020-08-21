@@ -601,15 +601,15 @@
 
                     <%
                         Object object = request.getAttribute("Product");
-                        if(object != null){
-                            List<Product> productList = (ArrayList<Product>)object;
+                        if (object != null) {
+                            List<Product> productList = (ArrayList<Product>) object;
                             for (Product product : productList) {
                                 out.print("                    <li>\n" +
-                                        "                        <div class=\"img\"><a href=\"#\"><img src=\"images/"+product.getFileName()+"\" width=\"210\" height=\"185\"/></a></div>\n" +
+                                        "                        <div class=\"img\"><a href=\"#\"><img src=\"images/" + product.getFileName() + "\" width=\"210\" height=\"185\"/></a></div>\n" +
                                         "                        <div class=\"price\">\n" +
-                                        "                            <font>￥<span>"+product.getPrice()+"</span></font> &nbsp; 26R\n" +
+                                        "                            <font>￥<span>" + product.getPrice() + "</span></font> &nbsp; 26R\n" +
                                         "                        </div>\n" +
-                                        "                        <div class=\"name\"><a href=\"#\">"+product.getName()+"</a></div>\n" +
+                                        "                        <div class=\"name\"><a href=\"#\">" + product.getName() + "</a></div>\n" +
                                         "                        <div class=\"carbg\">\n" +
                                         "                            <a href=\"#\" class=\"ss\">收藏</a>\n" +
                                         "                            <a href=\"#\" class=\"j_car\">加入购物车</a>\n" +

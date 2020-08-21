@@ -32,30 +32,30 @@ public class UserUtils {
     public static void login(String user, String pwd) {
 
         Connection conn = null;
-        Statement stmt =null;
+        Statement stmt = null;
         ResultSet rs = null;
 
-        try{
+        try {
             conn = JdbcUtils.getConnection();
             stmt = conn.createStatement();
 
-            String sql1 = String.format("select * from user where uesrname = '%s' and password = '%s';", user,pwd);
+            String sql1 = String.format("select * from user where uesrname = '%s' and password = '%s';", user, pwd);
 
-            String sql = "select * from user where uesrname = '"+user+"' and password = '"+pwd+"';";
+            String sql = "select * from user where uesrname = '" + user + "' and password = '" + pwd + "';";
 
             System.out.println(sql1);
 
             rs = stmt.executeQuery(sql1);
 
-            if(rs.next()){
+            if (rs.next()) {
                 System.out.println("登陆成功，欢迎您：" + user);
-            }else {
+            } else {
                 System.out.println("登陆失败！");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(stmt, conn, rs);
             } catch (SQLException throwables) {
@@ -73,19 +73,21 @@ public class UserUtils {
         pstmt.setString(1, user);
         pstmt.setString(2, pwd);
         ResultSet rs = pstmt.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             System.out.println("登陆成功，欢迎您：" + user);
             JdbcUtils.close(pstmt, conn, rs);
             return true;
-        }else {
+        } else {
             System.out.println("登陆失败！");
             JdbcUtils.close(pstmt, conn, rs);
             return false;
         }
 
-    };
+    }
 
-    public static void SelectAll(){
+    ;
+
+    public static void SelectAll() {
 
         List<User> userList = new ArrayList<>();
 
@@ -96,7 +98,7 @@ public class UserUtils {
         ResultSet rs = null;
 
 
-        try{
+        try {
             conn = JdbcUtils.getConnection();
 
             String sql = "select * from user;";
@@ -106,7 +108,7 @@ public class UserUtils {
 
             rs = pstmt.executeQuery(sql);
 
-            while(rs.next()){
+            while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt(1));
                 user.setUsername(rs.getString(2));
@@ -114,9 +116,9 @@ public class UserUtils {
                 userList.add(user);
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn, rs);
             } catch (SQLException throwables) {
@@ -124,12 +126,12 @@ public class UserUtils {
             }
         }
 
-        for(User user : userList){
+        for (User user : userList) {
             System.out.println(user);
         }
     }
 
-    public static Integer selectIdByName(String username){
+    public static Integer selectIdByName(String username) {
 
         Integer id = 0;
 
@@ -139,7 +141,7 @@ public class UserUtils {
 
         ResultSet rs = null;
 
-        try{
+        try {
             conn = JdbcUtils.getConnection();
 
             String sql = "select id from user where uesrname = ? ";
@@ -150,13 +152,13 @@ public class UserUtils {
 
             rs = pstmt.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 id = rs.getInt(1);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 JdbcUtils.close(pstmt, conn, rs);
             } catch (SQLException throwables) {

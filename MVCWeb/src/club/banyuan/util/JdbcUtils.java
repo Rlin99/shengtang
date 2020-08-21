@@ -11,7 +11,7 @@ public class JdbcUtils {
     private static String user;
     private static String pwd;
 
-    static{
+    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -45,7 +45,7 @@ public class JdbcUtils {
     }
 
     public static void close(Connection conn, Statement stmt, ResultSet rs) throws SQLException {
-        if(rs !=null){
+        if (rs != null) {
             rs.close();
         }
         if (stmt != null) {

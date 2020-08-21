@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) throws SQLException {
         UserDao userDao = new UserDaoImpl(JdbcUtils.getConnection());
-        return userDao.getLoginUser(username,password);
+        return userDao.getLoginUser(username, password);
     }
 
     @Override
